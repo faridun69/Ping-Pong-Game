@@ -1,9 +1,9 @@
 from pygame import *
 
 class GameSprite(sprite.Sprite):
-    def __init__(self, player_image, player_x, player_y, player_speed):
+    def __init__(self, player_image, player_x, player_y, a, b, player_speed):
         super().__init__()
-        self.image = transform.scale(image.load(player_image), (70, 100))
+        self.image = transform.scale(image.load(player_image), (a, b))
         self.rect = self.image.get_rect()
         self.rect.x = player_x
         self.rect.y = player_y
@@ -35,10 +35,12 @@ display.set_caption('Пинг-Понг')
 back_color = (43, 7, 227)
 window.fill(back_color)
 
-racket1 = Player('racket.png', 30, 200, 4)
-racket2 = Player('racket.png', 520, 200, 4)
-ball = GameSprite('tennis_ball.png', 200, 200, 4)
+racket1 = Player('racket.png', 30, 200, 25, 100, 4)
+racket2 = Player('racket.png', 520, 200, 25, 100, 4)
+ball = GameSprite('tennis_ball.png', 200, 200, 50, 50, 4)
 
+speed_x = 3
+speed_y = 3
 clock = time.Clock()
 fps = 60
 game = True
