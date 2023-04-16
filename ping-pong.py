@@ -37,12 +37,10 @@ window.fill(back_color)
 
 racket1 = Player('racket.png', 30, 200, 25, 100, 4)
 racket2 = Player('racket.png', 550, 200, 25, 100, 4)
-ball = GameSprite('tennis_ball.png', 200, 200, 50, 50, 4)
+ball = GameSprite('tennis_ball.png', 200, 200, 70, 70, 4)
 
 font.init()
 font_1 = font.SysFont('Arial', 50)
-lose1 = font_1.render('ИГРОК 1 ПРОИГРАЛ!', True, (255, 255, 255))
-lose1 = font_1.render('ИГРОК 2 ПРОИГРАЛ!', True, (255, 255, 255))
 
 speed_x = 3
 speed_y = 3
@@ -62,11 +60,23 @@ while game:
         racket1.update_l()
         racket2.update_r()
         ball.reset()
-        if ball.rect.x < 0:
-            window.blit(lose1, (90, 200))
+        ball.rect.x += speed_x
+        ball.rect.y += speed_y
+        if sprite.collide_rect(racket1, ball):
+            speed_x *= -1
+        if sprite.collide_rect(racket2, ball):
+            speed_x *= -1
+        if ball.rect.y < 50:
+            speed_y *= -1
+        if ball.rect.y > win_height - 50:
+            speed_y *= -1
+        if ball.rect.x < 5:
+            lose1 = font_1.render('ИГРОК 1 ПРОИГРАЛ!', True, (255, 0, 0))
+            window.blit(lose1, (50, 200))
             finish = True
-        elif ball.rect.x > 600:
-            window.blit(lose2, (90, 220))
+        elif ball.rect.x > win_width - 5:
+            lose2 = font_1.render('ИГРОК 2 ПРОИГРАЛ!', True, (255, 0, 0))
+            window.blit(lose2, (50, 220))
             finish = True
     display.update()
     clock.tick(fps)
