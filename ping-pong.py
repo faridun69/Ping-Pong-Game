@@ -36,8 +36,13 @@ back_color = (43, 7, 227)
 window.fill(back_color)
 
 racket1 = Player('racket.png', 30, 200, 25, 100, 4)
-racket2 = Player('racket.png', 520, 200, 25, 100, 4)
+racket2 = Player('racket.png', 550, 200, 25, 100, 4)
 ball = GameSprite('tennis_ball.png', 200, 200, 50, 50, 4)
+
+font.init()
+font_1 = font.SysFont('Arial', 50)
+lose1 = font_1.render('ИГРОК 1 ПРОИГРАЛ!', True, (255, 255, 255))
+lose1 = font_1.render('ИГРОК 2 ПРОИГРАЛ!', True, (255, 255, 255))
 
 speed_x = 3
 speed_y = 3
@@ -57,6 +62,11 @@ while game:
         racket1.update_l()
         racket2.update_r()
         ball.reset()
-
+        if ball.rect.x < 0:
+            window.blit(lose1, (90, 200))
+            finish = True
+        elif ball.rect.x > 600:
+            window.blit(lose2, (90, 220))
+            finish = True
     display.update()
     clock.tick(fps)
